@@ -97,16 +97,12 @@ class TripService {
 
             setTimeout(() => {
 
-                let alt = false;
                 for (let elem of this.trips) {
                     if (elem.name === tripName) {
-                        alt = true;
                         resolve(elem);
                     }
                 }
-                if (!alt) {
-                    reject("No trip with name " + tripName);
-                }
+                reject("No trip with name " + tripName);
             }, 2000)
         });
     }
@@ -118,7 +114,7 @@ class PriceService {
 
         this.priceServices = new Map();
         this.priceServices.set('paris', 100);
-        this.priceServices.set('Rio de Janeiro', 800);
+        this.priceServices.set('rio-de-janeiro', 800);
     }
 
     findPriceByTripId(tripId) {
@@ -144,7 +140,31 @@ class PriceService {
 
 let tripService1 = new TripService();
 let priceService1 = new PriceService();
-cl(tripService1.findByName("Paris").then(function (res) { cl("Trip found : " + res) }));
-cl(tripService1.findByName("Toulouse").then(function (res) { cl("Trip found : " + res) }));
-cl(priceService1.findPriceByTripId('Rio de Janeiro').then(function (res) { cl("Price found : " + res) }))
-cl(priceService1.findPriceByTripId('Nantes').then(function (res) { cl("Price found : " + res) }))
+
+cl(tripService1.findByName("Paris")
+    .then(res => {
+        cl("Trip found : " + res)
+    }, err => {
+        cl(err);
+    }));
+
+cl(tripService1.findByName("Toulouse")
+    .then(res => {
+        cl("Trip found : " + res)
+    }, err => {
+        cl(err);
+    }));
+
+cl(priceService1.findPriceByTripId("rio-de-janeiro")
+    .then(res => {
+        cl("Trip found : " + res)
+    }, err => {
+        cl(err);
+    }));
+
+cl(priceService1.findPriceByTripId("Nantes")
+    .then(res => {
+        cl("Trip found : " + res)
+    }, err => {
+        cl(err);
+    }));
